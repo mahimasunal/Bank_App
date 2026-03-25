@@ -6,7 +6,6 @@ import { AccountCntxt } from '../store/AccountContext'
 
 export default function ReqLoan() {
   const{activeCustomer,dispatch} = useContext(AccountCntxt)
-  console.log(activeCustomer)
   const[loanAmount,setLoanAmount] = useState('')
 
   function handleLoanInput(e){

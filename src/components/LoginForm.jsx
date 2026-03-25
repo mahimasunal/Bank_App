@@ -1,13 +1,13 @@
 
 import React, { useContext, useState } from 'react'
 import Input from './Input'
-import {customers} from '../utils/fakeData'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { AccountCntxt } from '../store/AccountContext'
  
 export default function LoginForm() {
 const {dispatch} = useContext(AccountCntxt)
     const navigate = useNavigate()
+    let {customers} = useContext(AccountCntxt)
 
     const[cred, setCred] = useState({
         username : '',

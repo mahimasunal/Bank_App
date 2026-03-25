@@ -8,7 +8,8 @@ export const AccountCntxt = createContext();
 const initialState = {
     loggedInUserId: null,
     activeCustomer : '',
-    customers
+    customers,
+    sessionTimeLeft: 180
 }
 
 

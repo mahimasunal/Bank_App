@@ -36,7 +36,6 @@ export default function Transfer() {
       })
     }
 
-  console.log(transferInfo)
   return (
     <div className={`${container}`}>
       <h3 className={heading}>Transfer money</h3>

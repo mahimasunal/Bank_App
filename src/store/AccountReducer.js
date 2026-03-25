@@ -1,6 +1,7 @@
 import { customers } from "../utils/fakeData";
 
 export function AccountReducer(state, action) {
+  console.log(state)
   switch (action.type) {
     case "loggedIn":
       return {
@@ -21,7 +22,7 @@ export function AccountReducer(state, action) {
 
       if (!beneficiary) return;
 
-      const updatedActiveCustomer = {...state.activeCustomer, amount: state.activeCustomer.amount - +transferAmount}
+      const updatedActiveCustomer = {...state.activeCustomer, amount: state.activeCustomer.amount - +transferAmount, transections : [...state.activeCustomer.transections, {type : 'debit', amount : transferAmount }]}
 
       const updatedCustomers = state.customers.map((cust) => {
 
@@ -29,22 +30,22 @@ export function AccountReducer(state, action) {
           return cust;
 
         if (cust.id === state.activeCustomer.id) {
-          return { ...cust, amount: cust.amount + (+action.payload)};
+          return { ...cust, amount: cust.amount - (+transferAmount),transections : [...cust.transections, {type : 'debit', amount : transferAmount }]};
         }
 
         if (cust.id === beneficiary.id) {
-          return { ...cust, amount: cust.amount + (+transferAmount) };
+          return { ...cust, amount: cust.amount + (+transferAmount),transections : [...cust.transections, {type : 'credit', amount : transferAmount }] };
         }
       });
 
-     return {...state, customers: updatedCustomers, activeCustomer: updatedActiveCustomer};
+     return {...state, customers: updatedCustomers, activeCustomer: updatedActiveCustomer, };
     }
 
     case 'loan' :{
 
       console.log(state)
 
-      const updatedActiveCustomer = {...state.activeCustomer, amount : state.activeCustomer.amount + (+action.payload), loan : state.activeCustomer.loan + (+action.payload)}
+      const updatedActiveCustomer = {...state.activeCustomer, amount : state.activeCustomer.amount + (+action.payload), loan : state.activeCustomer.loan + (+action.payload),transections : [...state.activeCustomer.transections, {type : 'credit', amount : +action.payload }]}
 
       let updatedCustomers = state.customers.map(cust=>{
         if(cust.id !== state.activeCustomer.id) return cust
